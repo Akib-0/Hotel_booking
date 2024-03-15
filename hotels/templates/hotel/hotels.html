@@ -1,0 +1,210 @@
+
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+  .section-pagetop {
+    background-color: #f8f9fa;
+    padding: 100px 0;
+    text-align: center;
+  }
+
+  .title-page {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #343a40;
+  }
+
+  .section-content {
+    padding: 50px 0;
+  }
+
+  .card {
+    margin-bottom: 30px;
+  }
+
+  .filter-group {
+    margin-bottom: 20px;
+  }
+
+  .filter-content {
+    padding: 20px;
+    background: #fff;
+  }
+
+  .list-menu li {
+    list-style: none;
+    margin-bottom: 10px;
+  }
+
+  .list-menu li a {
+    color: #343a40;
+    text-decoration: none;
+  }
+
+  .list-menu li a:hover {
+    color: #007bff;
+  }
+
+  .card-product-grid {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .card-product-grid .img-wrap {
+    overflow: hidden;
+  }
+
+  .card-product-grid img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .card-product-grid img:hover {
+    transform: scale(1.1);
+  }
+
+  .info-wrap {
+    padding: 20px;
+  }
+
+  .info-wrap .title {
+    font-size: 18px;
+    color: #343a40;
+    text-decoration: none;
+  }
+
+  .info-wrap .price-wrap {
+    margin-top: 10px;
+  }
+
+  .info-wrap .price {
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  .info-wrap .btn-success {
+    margin-top: 20px;
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+
+  .info-wrap .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+
+  .pagination {
+    justify-content: center;
+  }
+
+  .pagination .page-link {
+    color: #007bff;
+    background-color: transparent;
+    border: none;
+  }
+
+  .pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  .pagination .page-link:hover {
+    color: #0056b3;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="section-pagetop bg">
+  <div class="container">
+    <h2 class="title-page">Discover Your Perfect Stay</h2>
+  </div>
+</section>
+
+<section class="section-content padding-y">
+  <div class="container">
+    <div class="row">
+      <aside class="col-md-3">
+        <div class="card">
+          <article class="filter-group">
+            <header class="card-header">
+              <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
+                <i class="icon-control fa fa-chevron-down"></i>
+                <h6 class="title">Locations</h6>
+              </a>
+            </header>
+            <div class="filter-content collapse show" id="collapse_1" style="">
+              <div class="card-body">
+                <ul class="list-menu">
+                  {% for i in areas %}
+                  <li><a href="{% url 'hotels_by_area' area_slug=i.slug %}">{{i.area_name}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </aside>
+
+      <main class="col-md-9">
+        <header class="border-bottom mb-4 pb-3">
+          <div class="form-inline">
+            <span class="mr-md-auto">{{hotels | length}} Hotels found</span>
+          </div>
+        </header>
+
+        <div class="row">
+          {% if hotels %}
+          {% for item in hotels %}
+          <div class="col-md-4">
+            <figure class="card card-product-grid">
+              <div class="img-wrap">
+                <img src="{{item.image.url}}">
+              </div>
+              <figcaption class="info-wrap">
+                <div class="fix-height">
+                  <a href="{% url 'hotel_detail' item.area.slug item.slug %}" class="title">{{item.name}}</a>
+                  <div class="price-wrap mt-2">
+                    <span class="price">{{item.area}}</span>
+                  </div>
+                </div>
+                <a href="#" class="btn btn-block btn-success">Book Now</a>
+              </figcaption>
+            </figure>
+          </div>
+          {% endfor %}
+          {% else %}
+          <h2>No result found</h2>
+          {% endif %}
+        </div>
+
+        <nav class="mt-4" aria-label="Page navigation sample">
+          <ul class="pagination">
+            {% if hotels.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{hotels.previous_page_number}}">Previous</a></li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link">Previous</a></li>
+            {% endif %}
+
+            {% for i in hotels.paginator.page_range %}
+            <li class="page-item {% if hotels.number == i %}active{% endif %}"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {% endfor %}
+
+            {% if hotels.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{hotels.next_page_number}}">Next</a></li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link">Next</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </main>
+    </div>
+  </div>
+</section>
+{% endblock %}

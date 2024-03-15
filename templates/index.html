@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<style>
+  /* Custom CSS */
+  .intro-banner-wrap {
+    margin-bottom: 30px;
+  }
+
+  .section-name {
+    background-color: #f8f9fa;
+    padding: 30px 0;
+  }
+
+  .section-title {
+    margin-bottom: 20px;
+  }
+
+  .card-product-grid {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .card-product-grid:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-product-grid .img-wrap {
+    display: block;
+    overflow: hidden;
+  }
+
+  .card-product-grid img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .card-product-grid:hover img {
+    transform: scale(1.1);
+  }
+
+  .card-product-grid .info-wrap {
+    padding: 15px;
+  }
+
+  .card-product-grid .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .card-product-grid .btn {
+    margin-top: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .card-product-grid {
+      margin-bottom: 20px;
+    }
+  }
+</style>
+
+<section class="section-intro padding-y-sm">
+  <div class="container">
+
+    <div class="intro-banner-wrap">
+      <img src="{% static 'images/banners/2.jpg' %}" class="img-fluid rounded">
+    </div>
+
+  </div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION MAIN END// ========================= -->
+
+<!-- ========================= SECTION  ========================= -->
+<section class="section-name padding-y-sm">
+  <div class="container">
+
+    <header class="section-heading">
+      <a href="{% url 'hotels' %}" class="btn btn-outline-primary float-right">See all</a>
+      <h3 class="section-title">Popular destinations</h3>
+    </header><!-- sect-heading -->
+
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card card-product-grid">
+          <a href="{% url 'hotels_by_area' 'bandarban' %}" class="img-wrap"> <img src="{% static 'images/locations/bandarban.jpg' %}"> </a>
+          <figcaption class="info-wrap">
+            <a href="{% url 'hotels_by_area' 'bandarban' %}" class="title">Bandarban</a>
+          </figcaption>
+        </div>
+      </div> <!-- col.// -->
+      <div class="col-md-3">
+        <div class="card card-product-grid">
+          <a href="{% url 'hotels_by_area' 'coxs-bazar' %}" class="img-wrap"> <img src="{% static 'images/locations/cox.jpeg' %}"> </a>
+          <figcaption class="info-wrap">
+            <a href="{% url 'hotels_by_area' 'coxs-bazar' %}" class="title">Cox's Bazar</a>
+          </figcaption>
+        </div>
+      </div> <!-- col.// -->
+      <div class="col-md-3">
+        <div class="card card-product-grid">
+          <a href="{% url 'hotels_by_area' 'sylhet' %}" class="img-wrap"> <img src="{% static 'images/locations/sylhet.jpg' %}"> </a>
+          <figcaption class="info-wrap">
+            <a href="{% url 'hotels_by_area' 'sylhet' %}" class="title">Sylhet</a>
+          </figcaption>
+        </div>
+      </div> <!-- col.// -->
+    </div> <!-- row.// -->
+
+  </div><!-- container // -->
+</section>
+
+{% endblock %}
